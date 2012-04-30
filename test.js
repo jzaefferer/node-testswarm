@@ -1,19 +1,17 @@
-var testBase = "http://localhost/testswarm-ui-checkout/";
+var myCode = "http://localhost/jquery-ui-checkout";
 require( "./testswarm" )( {
-	url: "http://localhost:82/testswarm/",
+	url: "http://localhost/testswarm",
 	pollInterval: 1000,
-	timeout: 1000 * 10,
+	timeout: 1000 * 60 * 1, // 1 minute
 	done: function( passed ) {
 		process.exit( passed ? 0 : 1 );
 	}
 }, {
-	authUsername: "jqueryui",
-	authToken: "71d46254c5c4dd883592ee3188593a340aaecb0f",
-	jobName: 'jQuery UI commit',
-	runMax: 1,
+	authUsername: "swarmuser",
+	authToken: "yourauthtoken",
+	jobName: "node-testswarm test job",
+	runMax: 4,
 	"runNames[]": ["Accordion", "Autocomplete"],
-	"runUrls[]": [ testBase + "tests/unit/accordion/accordion.html", testBase + "tests/unit/autocomplete/autocomplete.html" ],
-	// "runNames[]": ["Autocomplete"],
-	// "runUrls[]": [ testBase + "tests/unit/autocomplete/autocomplete.html" ],
-	browserSets: "popular"
+	"runUrls[]": [ myCode + "/tests/unit/accordion/accordion.html", myCode + "/tests/unit/autocomplete/autocomplete.html" ],
+	"browserSets[]": ["popular"]
 });
