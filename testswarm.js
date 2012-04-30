@@ -45,25 +45,25 @@ function logResults( config, job, state ) {
 
 function pollResults( config, job ) {
 	process.stdout.write( "." );
-	request.get( config.url + "api.php?" + querystring({
+	request.get( config.url + "/api.php?" + querystring({
 		action: "job",
 		item: job.id
-	}), function( error, response, body ) {
+	}), function ( error, response, body ) {
 		if ( error ) {
 			throw error;
 		}
 		var result = JSON.parse( body );
 		if ( !result.job ) {
-			console.log( "Response didn't include a job property, can't continue. Response was: " + body );
+			console.log( "API returned error, can't continue. Response was: " + body );
 			config.done( false );
 			return;
 		}
-		if (continueRunning( result.job ) ) {
+		if ( continueRunning( result.job ) ) {
 			if ( config.started + config.timeout < +new Date() ) {
 				process.stdout.write( "\n\n" );
 				logResults( config, result.job, "Timed out" );
 			}
-			setTimeout(function() {
+			setTimeout(function () {
 				pollResults( config, job );
 			}, config.pollInterval );
 		} else {
@@ -73,25 +73,34 @@ function pollResults( config, job ) {
 	});
 }
 
-module.exports = function( config, jobs ) {
+module.exports = function ( config, addjobParams ) {
 	config = extend({
+		// default config
+		//url: {String} required, no default
+		//done: {Function} required, no default
 		pollInterval: 5000,
-		// give up after 15 minutes
 		timeout: 1000 * 60 * 15,
 		started: +new Date(),
 		urlParts: urlparse( config.url )
 	}, config);
-	jobs = extend({
+	addjobParams = extend(addjobParams, {
 		action: "addjob"
-	}, jobs);
-	request.post( config.url + "api.php?" + querystring( jobs ), function( error, response, body ) {
+	});
+	request.post( config.url + "/api.php?" + querystring( addjobParams ), function ( error, response, body ) {
+		var result, jobInfo;
 		if ( error ) {
 			throw error;
 		}
-		var job = JSON.parse( body ).addjob;
-		console.log( "Submited job " + job.id + " " + config.url + "job/" + job.id );
+		result = JSON.parse( body );
+		if ( !result.addjob ) {
+			console.log( "API returned error, can't continue. Response was: " + body );
+			config.done( false );
+			return;
+		}
+		jobInfo = result.addjob;
+		console.log( "Submited job " + jobInfo.id + " " + config.url + "/job/" + jobInfo.id );
 		process.stdout.write( "Polling for results" );
-		pollResults( config, job );
+		pollResults( config, jobInfo );
 	});
 
 };
