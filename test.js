@@ -1,7 +1,8 @@
 var testBase = "http://localhost/testswarm-ui-checkout/";
 require( "./testswarm" )( {
-	url: "http://localhost:82/testswarm/api.php?",
+	url: "http://localhost:82/testswarm/",
 	pollInterval: 1000,
+	timeout: 1000 * 10,
 	done: function( passed ) {
 		process.exit( passed ? 0 : 1 );
 	}
