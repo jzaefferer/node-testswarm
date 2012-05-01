@@ -17,25 +17,16 @@ function continueRunning( job ) {
 	}).length;
 }
 
-function runStats( config, run ) {
-	if ( run.runStatus === "new" ) {
-		return "";
-	}
-	var runUrl = config.urlParts.protocol + "//" + config.urlParts.host + run.runResultsUrl;
-	return ", total: " + run.totalTests + ", failed: " + run.failedTests + ", errors: " + run.errors + ", results: " + runUrl;
-}
-
 function logResults( config, job, state ) {
 	var passed = true;
-	console.log( state + " job " + job.jobInfo.name + " (" + job.jobInfo.id + ")" );
+	console.log( "Job " + job.jobInfo.id + ":\n\t" + job.jobInfo.name + "\nState: " + state );
 	console.log( "\nResults: " );
 	job.runs.filter(function( run ) {
-		var ua, uaRun;
-		console.log( "  " + run.info.name + ": ");
-		for ( ua in run.uaRuns ) {
-			uaRun = run.uaRuns[ ua ];
-			console.log( "    " + ua + ": " + uaRun.runStatus + runStats( config, uaRun ) );
-			if ( uaRun.runStatus !== "passed" ) {
+		var uaID;
+		console.log( "\n - " + run.info.name + ":\n", run.uaRuns );
+		for ( uaID in run.uaRuns ) {
+			// "new", "failed", "error", "timedout", ..
+			if ( run.uaRuns[uaID].runStatus !== "passed" ) {
 				passed = false;
 			}
 		}
@@ -61,7 +52,7 @@ function pollResults( config, job ) {
 		if ( continueRunning( result.job ) ) {
 			if ( config.started + config.timeout < +new Date() ) {
 				process.stdout.write( "\n\n" );
-				logResults( config, result.job, "Timed out" );
+				logResults( config, result.job, "Timed out after " + config.timeout + 'ms' );
 			}
 			setTimeout(function () {
 				pollResults( config, job );
@@ -79,7 +70,7 @@ module.exports = function ( config, addjobParams ) {
 		//url: {String} required, no default
 		//done: {Function} required, no default
 		pollInterval: 5000,
-		timeout: 1000 * 60 * 15,
+		timeout: 1000 * 60 * 15, // 15 minutes
 		started: +new Date(),
 		urlParts: urlparse( config.url )
 	}, config);
