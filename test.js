@@ -1,8 +1,8 @@
 var myCode = "http://localhost/testswarm-ui-checkout/";
 require( "./testswarm" )( {
-	url: "http://localhost/testswarm/",
+	url: "http://localhost/testswarm",
 	pollInterval: 1000,
-	timeout: 1000 * 60 * 10,
+	timeout: 1000 * 10,
 	done: function( passed ) {
 		process.exit( passed ? 0 : 1 );
 	}

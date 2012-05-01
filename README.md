@@ -31,6 +31,8 @@ testswarm( {
 });
 ```
 
+For local testing, make a copy of `test.js`, name it `local-test.js` (in .gitignore) and modify to match your local TestSwarm setup.
+
 ## Release History
 * 0.2.0 Global timeout, check all uaRuns, proper URLs back to TestSwarm, some additional error handling
 * 0.1.1 fix engine property in package.json

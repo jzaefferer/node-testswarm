@@ -35,7 +35,7 @@ function logResults( config, job, state ) {
 		for ( ua in run.uaRuns ) {
 			uaRun = run.uaRuns[ ua ];
 			console.log( "    " + ua + ": " + uaRun.runStatus + runStats( config, uaRun ) );
-			if ( uaRun.runStatus === "failed" ) {
+			if ( uaRun.runStatus !== "passed" ) {
 				passed = false;
 			}
 		}
