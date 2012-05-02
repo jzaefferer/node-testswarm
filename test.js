@@ -2,7 +2,8 @@ var myCode = "http://localhost/jquery-ui-checkout";
 require( "./testswarm" )( {
 	url: "http://localhost/testswarm",
 	pollInterval: 1000,
-	timeout: 1000 * 60 * 1, // 1 minute
+	// 1 minute
+	timeout: 1000 * 60 * 1,
 	done: function( passed ) {
 		process.exit( passed ? 0 : 1 );
 	}

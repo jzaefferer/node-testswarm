@@ -76,10 +76,11 @@ function pollResults( config, job ) {
 module.exports = function ( config, addjobParams ) {
 	config = extend({
 		// default config
-		//url: {String} required, no default
-		//done: {Function} required, no default
+		// url: {String} required, no default
+		// done: {Function} required, no default
 		pollInterval: 5000,
-		timeout: 1000 * 60 * 15, // 15 minutes
+		// 15 minutes
+		timeout: 1000 * 60 * 15,
 		started: +new Date(),
 		urlParts: urlparse( config.url )
 	}, config);
