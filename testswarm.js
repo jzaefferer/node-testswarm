@@ -1,12 +1,17 @@
 var request = require( "request" ),
 	querystring = require( "querystring" ).stringify,
-	urlparse = require( "url" ).parse;
+	url = require( "url" );
 
 function extend( a, b ) {
 	for (var key in b) {
 		a[key] = b[key];
 	}
 	return a;
+}
+
+function baseUrl( config ) {
+	// make sure there's always a trailing slash
+	return url.format( config.urlParts).replace( /\/$/, "" ) + "/";
 }
 
 function continueRunning( job ) {
@@ -27,7 +32,7 @@ function runStats( uaID, uaRun ) {
 
 function logResults( config, job, state ) {
 	var passed = true;
-	console.log( "Job " + job.jobInfo.id + ":\n\t" + job.jobInfo.name + "\nState: " + state );
+	console.log( "Job " + job.jobInfo.id + ":\n\t" + job.jobInfo.name + "\nState:\n\t" + state );
 	console.log( "\nResults: " );
 	job.runs.filter(function( run ) {
 		var uaID;
@@ -45,7 +50,7 @@ function logResults( config, job, state ) {
 
 function pollResults( config, job ) {
 	process.stdout.write( "." );
-	request.get( config.url + "/api.php?" + querystring({
+	request.get( baseUrl( config ) + "api.php?" + querystring({
 		action: "job",
 		item: job.id
 	}), function ( error, response, body ) {
@@ -82,12 +87,12 @@ module.exports = function ( config, addjobParams ) {
 		// 15 minutes
 		timeout: 1000 * 60 * 15,
 		started: +new Date(),
-		urlParts: urlparse( config.url )
+		urlParts: url.parse( config.url )
 	}, config);
 	addjobParams = extend(addjobParams, {
 		action: "addjob"
 	});
-	request.post( config.url + "/api.php?" + querystring( addjobParams ), function ( error, response, body ) {
+	request.post( baseUrl( config ) + "api.php?" + querystring( addjobParams ), function ( error, response, body ) {
 		var result, jobInfo;
 		if ( error ) {
 			throw error;
@@ -99,7 +104,7 @@ module.exports = function ( config, addjobParams ) {
 			return;
 		}
 		jobInfo = result.addjob;
-		console.log( "Submited job " + jobInfo.id + " " + config.url + "/job/" + jobInfo.id );
+		console.log( "Submited job " + jobInfo.id + " " + baseUrl( config ) + "job/" + jobInfo.id );
 		process.stdout.write( "Polling for results" );
 		pollResults( config, jobInfo );
 	});

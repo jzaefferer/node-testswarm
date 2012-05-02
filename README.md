@@ -11,8 +11,8 @@ See [addjob README](https://github.com/jquery/testswarm/tree/master/scripts/addj
 var testswarm = require('testswarm');
 var myCode = "http://localhost/jquery-ui-checkout";
 testswarm( {
-	// base url for testswarm server (no trailing slash)
-	url: "http://localhost/testswarm",
+	// base url for testswarm server
+	url: "http://localhost/testswarm/",
 	// how often to job status (in milliseconds)
 	pollInterval: 1000,
 	// time out (in milliseconds)

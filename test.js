@@ -1,6 +1,6 @@
 var myCode = "http://localhost/jquery-ui-checkout";
 require( "./testswarm" )( {
-	url: "http://localhost/testswarm",
+	url: "http://localhost/testswarm/",
 	pollInterval: 1000,
 	// 1 minute
 	timeout: 1000 * 60 * 1,
