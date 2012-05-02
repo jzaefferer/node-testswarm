@@ -17,14 +17,23 @@ function continueRunning( job ) {
 	}).length;
 }
 
+function runStats( uaID, uaRun ) {
+	var base = uaID + ": " + uaRun.runStatus;
+	if ( uaRun.runResultsUrl ) {
+		base +=  " (" + uaRun.runResultsLabel + ")" + ": " + uaRun.runResultsUrl;
+	}
+	return base;
+}
+
 function logResults( config, job, state ) {
 	var passed = true;
 	console.log( "Job " + job.jobInfo.id + ":\n\t" + job.jobInfo.name + "\nState: " + state );
 	console.log( "\nResults: " );
 	job.runs.filter(function( run ) {
 		var uaID;
-		console.log( "\n - " + run.info.name + ":\n", run.uaRuns );
+		console.log( "\n - " + run.info.name + ":" );
 		for ( uaID in run.uaRuns ) {
+			console.log( runStats( uaID, run.uaRuns[uaID] ) );
 			// "new", "failed", "error", "timedout", ..
 			if ( run.uaRuns[uaID].runStatus !== "passed" ) {
 				passed = false;
