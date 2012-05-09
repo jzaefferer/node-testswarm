@@ -14,5 +14,5 @@ require( "./testswarm" )( {
 	runMax: 4,
 	"runNames[]": ["Accordion", "Autocomplete"],
 	"runUrls[]": [ myCode + "/tests/unit/accordion/accordion.html", myCode + "/tests/unit/autocomplete/autocomplete.html" ],
-	"browserSets[]": ["popular"]
+	"browserSets[]": ["currentDesktop"]
 });
