@@ -97,7 +97,12 @@ module.exports = function ( config, addjobParams ) {
 		if ( error ) {
 			throw error;
 		}
-		result = JSON.parse( body );
+		try {
+			result = JSON.parse( body );
+		} catch( e ) {
+			console.log( "Failed parsing body as json, was: " + body );
+			config.done( false );
+		}
 		if ( !result.addjob ) {
 			console.log( "API returned error, can't continue. Response was: " + body );
 			config.done( false );
