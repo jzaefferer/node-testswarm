@@ -92,7 +92,10 @@ module.exports = function ( config, addjobParams ) {
 	addjobParams = extend(addjobParams, {
 		action: "addjob"
 	});
-	request.post( baseUrl( config ) + "api.php?" + querystring( addjobParams ), function ( error, response, body ) {
+	request.post({
+		url: baseUrl( config ) + "api.php",
+		form: addjobParams
+	}, function ( error, response, body ) {
 		var result, jobInfo;
 		if ( error ) {
 			throw error;
