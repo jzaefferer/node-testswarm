@@ -1,4 +1,5 @@
-var myCode = "http://localhost/jquery-ui-checkout";
+var myTestPage = "http://localhost/jquery-core-checkout/test/",
+	mySuites = ["attributes", "callbacks"];
 require( "./testswarm" )( {
 	url: "http://localhost/testswarm/",
 	pollInterval: 1000,
@@ -11,8 +12,10 @@ require( "./testswarm" )( {
 	authUsername: "swarmuser",
 	authToken: "yourauthtoken",
 	jobName: "node-testswarm test job",
-	runMax: 4,
-	"runNames[]": ["Accordion", "Autocomplete"],
-	"runUrls[]": [ myCode + "/tests/unit/accordion/accordion.html", myCode + "/tests/unit/autocomplete/autocomplete.html" ],
-	"browserSets[]": ["currentDesktop"]
+	runMax: 2,
+	"runNames[]": mySuites,
+	"runUrls[]": mySuites.map(function (suite) {
+		return myTestPage + "?module=" + suite;
+	}),
+	"browserSets[]": ["example"]
 });

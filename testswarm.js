@@ -9,36 +9,50 @@ function extend( a, b ) {
 	return a;
 }
 
-function baseUrl( config ) {
-	// make sure there's always a trailing slash
-	return url.format( config.urlParts).replace( /\/$/, "" ) + "/";
+function swarmUrl( config ) {
+	// Normalise to no trailing slash
+	return url.format( config.urlParts ).replace( /\/$/, "" );
 }
 
-function continueRunning( job ) {
-	return job.runs.filter(function( run ) {
+function swarmServer( config ) {
+	var obj = extend( {}, config.urlParts );
+	obj.href = obj.pathname = obj.search = obj.path = obj.query = obj.hash = undefined;
+	// Normalise to no trailing slash
+	return url.format( obj ).replace( /\/$/, "" );
+}
+
+/** @return boolean */
+function isJobDone( job ) {
+	return !job.runs.filter(function( run ) {
 		return Object.keys(run.uaRuns).filter(function( uaRun ) {
 			return (/new|progress/).test( run.uaRuns[ uaRun ].runStatus );
 		}).length;
 	}).length;
 }
 
-function runStats( uaID, uaRun ) {
-	var base = uaID + ": " + uaRun.runStatus;
+function runStats( uaID, uaRun, config ) {
+	var msg = uaID + ": " + uaRun.runStatus;
 	if ( uaRun.runResultsUrl ) {
-		base +=  " (" + uaRun.runResultsLabel + ")" + ": " + uaRun.runResultsUrl;
+		msg +=  " (" + uaRun.runResultsLabel + "). " + swarmServer( config ) + uaRun.runResultsUrl;
 	}
-	return base;
+	return msg;
 }
 
 function logResults( config, job, state ) {
-	var passed = true;
+	var passed;
+
+	// Line break to return from the dot-writes
+	process.stdout.write( "\n" );
+
 	console.log( "Job " + job.jobInfo.id + ":\n\t" + job.jobInfo.name + "\nState:\n\t" + state );
-	console.log( "\nResults: " );
+	console.log( "Results: " );
+
+	passed = true;
 	job.runs.filter(function( run ) {
 		var uaID;
-		console.log( "\n - " + run.info.name + ":" );
+		console.log( "\t* " + run.info.name );
 		for ( uaID in run.uaRuns ) {
-			console.log( runStats( uaID, run.uaRuns[uaID] ) );
+			console.log( "\t  " + runStats( uaID, run.uaRuns[uaID], config ) );
 			// "new", "failed", "error", "timedout", ..
 			if ( run.uaRuns[uaID].runStatus !== "passed" ) {
 				passed = false;
@@ -48,9 +62,14 @@ function logResults( config, job, state ) {
 	config.done( passed );
 }
 
+function logError( msg ) {
+	// Line break to return from the dot-writes
+	console.log( "\nError:\n\t" + msg );
+}
+
 function pollResults( config, job ) {
 	process.stdout.write( "." );
-	request.get( baseUrl( config ) + "api.php?" + querystring({
+	request.get( swarmUrl( config ) + "/api.php?" + querystring({
 		action: "job",
 		item: job.id
 	}), function ( error, response, body ) {
@@ -59,20 +78,18 @@ function pollResults( config, job ) {
 		}
 		var result = JSON.parse( body );
 		if ( !result.job ) {
-			console.log( "API returned error, can't continue. Response was: " + body );
+			logError( "API returned error, can't continue. Response was: " + body );
 			config.done( false );
 			return;
 		}
-		if ( continueRunning( result.job ) ) {
+		if ( !isJobDone( result.job ) ) {
 			if ( config.started + config.timeout < +new Date() ) {
-				process.stdout.write( "\n\n" );
 				logResults( config, result.job, "Timed out after " + config.timeout + 'ms' );
 			}
 			setTimeout(function () {
 				pollResults( config, job );
 			}, config.pollInterval );
 		} else {
-			process.stdout.write( "\n\n" );
 			logResults( config, result.job, "Finished" );
 		}
 	});
@@ -93,7 +110,7 @@ module.exports = function ( config, addjobParams ) {
 		action: "addjob"
 	});
 	request.post({
-		url: baseUrl( config ) + "api.php",
+		url: swarmUrl( config ) + "/api.php",
 		form: addjobParams
 	}, function ( error, response, body ) {
 		var result, jobInfo;
@@ -112,7 +129,7 @@ module.exports = function ( config, addjobParams ) {
 			return;
 		}
 		jobInfo = result.addjob;
-		console.log( "Submited job " + jobInfo.id + " " + baseUrl( config ) + "job/" + jobInfo.id );
+		console.log( "Submitted job " + jobInfo.id + " " + swarmUrl( config ) + "/job/" + jobInfo.id );
 		process.stdout.write( "Polling for results" );
 		pollResults( config, jobInfo );
 	});
