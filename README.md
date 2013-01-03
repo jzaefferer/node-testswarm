@@ -1,4 +1,4 @@
-[![Build Status](https://secure.travis-ci.org/Krinkle/node-testswarm.png?branch=rewrite)](http://travis-ci.org/Krinkle/node-testswarm)
+[![Build Status](https://secure.travis-ci.org/jzaefferer/node-testswarm.png)](http://travis-ci.org/jzaefferer/node-testswarm)
 
 # node-testswarm
 
