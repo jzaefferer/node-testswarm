@@ -1,7 +1,7 @@
 {
 	"name": "testswarm",
 	"description": "Nodejs module for interacting with TestSwarm",
-	"version": "1.0.0-alpha",
+	"version": "1.0.1",
 	"homepage": "https://github.com/jzaefferer/node-testswarm",
 	"author": {
 		"name": "Jörn Zaefferer",

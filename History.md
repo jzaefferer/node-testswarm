@@ -1,5 +1,9 @@
 # Release History
 
+## 1.0.1 / 2013-03-17
+
+* (issue #9) Always invoke the addjob callback with a boolean "passed" value.
+
 ## 1.0.0 / 2012-12-16
 
 * Complete rewrite providing a new API (not backwards compatible).
@@ -32,7 +36,7 @@
 * Proper URLs back to TestSwarm.
 * Some additional error handling.
 
-## 0.1.1 (2012-xx-xx
+## 0.1.1 / 2012-xx-xx
 
 * Fix engine property in package.json.
 
