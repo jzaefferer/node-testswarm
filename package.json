@@ -32,7 +32,7 @@
 	],
 	"main": "lib/testswarm.js",
 	"scripts": {
-		"test": "./node_modules/.bin/grunt test"
+		"test": "grunt test"
 	},
 	"dependencies": {
 		"request": "~2.12.0"
