@@ -18,7 +18,7 @@ testswarm.createClient( {
 	{
 		name: "node-testswarm test job",
 		runs: runs,
-		browserSets: ["example"],
+		browserSets: ["example"]
 	}, function( err, passed ) {
 		if ( err ) {
 			throw err;

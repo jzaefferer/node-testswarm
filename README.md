@@ -7,7 +7,7 @@ Nodejs module for interacting with TestSwarm
 ## Getting Started
 Install the module with: `npm install testswarm`.
 
-See [addjob README](https://github.com/jquery/testswarm/tree/master/scripts/addjob#fields) in the TestSwarm repository for what parameters the addjob API takes.
+See [addjob documentation](lib/testswarm.js#L179) what options are available.
 
 ```javascript
 var testswarm = require( "./lib/testswarm" ),
