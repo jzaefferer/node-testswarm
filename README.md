@@ -1,4 +1,4 @@
-[![Build Status](https://secure.travis-ci.org/jzaefferer/node-testswarm.png)](http://travis-ci.org/jzaefferer/node-testswarm)
+[![Build Status](https://secure.travis-ci.org/jzaefferer/node-testswarm.png)](http://travis-ci.org/jzaefferer/node-testswarm) [![NPM version](https://badge.fury.io/js/testswarm.png)](http://badge.fury.io/js/testswarm)
 
 # node-testswarm
 
