@@ -1,45 +1,45 @@
 {
-	"name": "testswarm",
-	"description": "Nodejs module for interacting with TestSwarm",
-	"keywords": [
-		"api",
-		"testswarm"
-	],
-	"version": "1.0.3",
-	"homepage": "https://github.com/jzaefferer/node-testswarm",
-	"author": {
-		"name": "Jörn Zaefferer",
-		"email": "joern.zaefferer@gmail.com"
-	},
-	"contributors": [
-		{
-			"name": "Timo Tijhof",
-			"url": "https://github.com/Krinkle"
-		}
-	],
-	"repository": {
-		"type": "git",
-		"url": "git://github.com/jzaefferer/node-testswarm.git"
-	},
-	"bugs": {
-		"url": "https://github.com/jzaefferer/node-testswarm/issues"
-	},
-	"licenses": [
-		{
-			"type": "MIT",
-			"url": "https://github.com/jzaefferer/node-testswarm/blob/master/LICENSE-MIT"
-		}
-	],
-	"main": "lib/testswarm.js",
-	"scripts": {
-		"test": "grunt test"
-	},
-	"dependencies": {
-		"request": "~2.12.0"
-	},
-	"devDependencies": {
-		"grunt-cli": "~0.1.6",
-		"grunt": "~0.4.0",
-		"grunt-contrib-jshint": "~0.2.0"
-	}
+  "name": "testswarm",
+  "description": "Nodejs module for interacting with TestSwarm",
+  "keywords": [
+    "api",
+    "testswarm"
+  ],
+  "version": "1.0.4",
+  "homepage": "https://github.com/jzaefferer/node-testswarm",
+  "author": {
+    "name": "Jörn Zaefferer",
+    "email": "joern.zaefferer@gmail.com"
+  },
+  "contributors": [
+    {
+      "name": "Timo Tijhof",
+      "url": "https://github.com/Krinkle"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jzaefferer/node-testswarm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jzaefferer/node-testswarm/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/jzaefferer/node-testswarm/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "lib/testswarm.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "dependencies": {
+    "request": "~2.12.0"
+  },
+  "devDependencies": {
+    "grunt-cli": "~0.1.6",
+    "grunt": "~0.4.0",
+    "grunt-contrib-jshint": "~0.2.0"
+  }
 }
