@@ -5,9 +5,9 @@
 Nodejs module for interacting with TestSwarm
 
 ## Getting Started
-Install the module with: `npm install testswarm`.
+Install the module with:
 
-See [addjob documentation](lib/testswarm.js#L179) what options are available.
+	npm install --save-dev testswarm
 
 ```javascript
 var testswarm = require( "./lib/testswarm" ),
@@ -18,19 +18,19 @@ var testswarm = require( "./lib/testswarm" ),
 	runs[suite] = testUrl + "?module=" + suite;
 });
 
-testswarm.createClient( {
+testswarm.createClient({
 	url: "http://localhost/testswarm/"
-} )
+})
 .addReporter( testswarm.reporters.cli )
-.auth( {
+.auth({
 	id: "example",
 	token: "yourauthtoken"
-} )
+})
 .addjob(
 	{
 		name: "node-testswarm test job",
 		runs: runs,
-		browserSets: ["example"],
+		browserSets: [ "example" ],
 	}, function( err, passed ) {
 		if ( err ) {
 			throw err;
@@ -42,6 +42,34 @@ testswarm.createClient( {
 
 For local testing, copy `sample-test.js` to `test.js` and modify to match your local TestSwarm setup.
 
+## API
+
+### createClient({ url })
+
+* `Object config`
+ - `String url` - Url to root of TestSwarm install.
+
+### Client#addReporter( reporter )
+
+* `Object reporter` - usually `testswarm.reporters.cli`, unless you want to use a custom reporter
+
+### Client#auth({ id, token })
+
+* `Object auth`
+ - `String id` - Username of TestSwarm account.
+ - `String token` - Authentication token of account.
+
+### Client#addjob( options, callback )
+
+* `Object options`
+ - `String name` - name of this job
+ - `Number runMax` - [optional] how often failed tests should rerun
+ - `Object runs` -  Run urls by run name.
+ - `Array|String browserSets` - which sets to test against
+ - `Number pollInterval` -  [optional] In milliseconds, default 5 seconds.
+ - `Number timeout` -  [optional] In milliseconds, default 15 minutes.
+* `Function( Object err, Boolean passed, Object results ) callback`
+
 ## License
-Copyright (c) 2012 Jörn Zaefferer
+Copyright (c) 2014 Jörn Zaefferer
 Licensed under the MIT license.
