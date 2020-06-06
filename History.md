@@ -1,5 +1,10 @@
 # Release History
 
+## 1.1.1 / 2020-06-06
+
+* Change 'request' dependency from 2.12.0 to 2.88.0. (Michał Gołębiowski-Owczarek)
+* Write API docs in the README. (Jörn Zaefferer)
+
 ## 1.1.0 / 2013-05-14
 
 * Change authentication request to use `authID` instead of `authUsername`
