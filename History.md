@@ -1,16 +1,25 @@
 # Release History
 
+## 1.1.0 / 2013-05-14
+
+* Change authentication request to use `authID` instead of `authUsername`
+  to accomodate changes in upstream TestSwarm 1.0.0-alpha. (Timo Tijhof)
+
+## 1.0.3 / 2013-04-30
+
+* Fix the timeout error to display the timeout instead of undefined. (Daniel Herman)
+
 ## 1.0.1 / 2013-03-17
 
-* (issue #9) Always invoke the addjob callback with a boolean "passed" value.
+* (issue #9) Always invoke the addjob callback with a boolean "passed" value. (Timo Tijhof)
 
 ## 1.0.0 / 2012-12-16
 
-* Complete rewrite providing a new API (not backwards compatible).
+* Complete rewrite providing a new API, not backwards compatible. (Timo Tijhof)
 
 ## 0.3.0 / 2012-11-29
 
-* Refactor logic (backwards compatible).
+* Refactor logic, backwards compatible. (Jörn Zaefferer)
 * Clean up output.
 
 ## 0.2.3 / 2012-06-16
