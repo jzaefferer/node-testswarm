@@ -1,5 +1,9 @@
 # Release History
 
+## 1.1.2 / 2020-06-10
+
+* Fix invalid addjob() requests that regressed in v1.1.1. (Michał Gołębiowski-Owczarek)
+
 ## 1.1.1 / 2020-06-06
 
 * Change 'request' dependency from 2.12.0 to 2.88.0. (Michał Gołębiowski-Owczarek)
