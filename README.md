@@ -1,4 +1,6 @@
-[![Build Status](https://travis-ci.org/jzaefferer/node-testswarm.svg?branch=master)](https://travis-ci.org/jzaefferer/node-testswarm) [![NPM version](https://badge.fury.io/js/testswarm.svg)](http://badge.fury.io/js/testswarm)
+[![Build Status](https://github.com/jzaefferer/node-testswarm/workflows/Tests/badge.svg)](https://github.com/jzaefferer/node-testswarm/actions?workflow=Tests)
+[![Built with Grunt](https://gruntjs.com/builtwith.svg)](https://gruntjs.com/)
+[![npm Package](https://img.shields.io/npm/v/testswarm.svg?style=flat)](https://www.npmjs.com/package/testswarm)
 
 # node-testswarm
 

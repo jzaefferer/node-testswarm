@@ -1,7 +1,0 @@
-language: node_js
-node_js:
-  # jQuery TestSwarm server runs Node v4.x
-  - "4"
-  # jQuery Jenkins server runs Node v10.x
-  - "10"
-  - "14"

@@ -1,0 +1,32 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+env:
+  FORCE_COLOR: 2
+
+jobs:
+  run:
+    name: Node ${{ matrix.node }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [10, 14, 20]
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@main
+
+      - name: Set up Node.js
+        uses: actions/setup-node@main
+        with:
+          node-version: ${{ matrix.node }}
+
+      - run: npm install
+
+      - run: npm test
